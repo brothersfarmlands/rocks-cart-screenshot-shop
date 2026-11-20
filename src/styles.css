@@ -166,6 +166,12 @@
 @utility bg-gradient-header {
   background-image: var(--gradient-header);
 }
+/* Google's required light-theme sign-in button colours. */
+@utility google-btn {
+  background-color: oklch(1 0 0);
+  border: 1px solid oklch(0.56 0.004 160);
+  color: oklch(0.24 0 0);
+}
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
