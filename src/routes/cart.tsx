@@ -30,8 +30,8 @@ function Cart() {
 
   const tryApply = (c: string) => {
     const found = findCoupon(c);
-    if (!found) return toast.error("Invalid coupon code");
-    if (bill.subtotal < found.minOrder) return toast.error(`Add ${formatINR(found.minOrder - bill.subtotal)} more to use ${found.code}`);
+    if (!found) { toast.error("Invalid coupon code"); return; }
+    if (bill.subtotal < found.minOrder) { toast.error(`Add ${formatINR(found.minOrder - bill.subtotal)} more to use ${found.code}`); return; }
     applyCoupon(found.code);
     setCouponOpen(false);
     setCode("");

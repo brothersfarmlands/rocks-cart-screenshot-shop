@@ -226,7 +226,7 @@ function useStoreState() {
       })),
 
     // Addresses
-    saveAddress: (address: Omit<Address, "id" | "isDefault"> & { id?: string; isDefault?: boolean }) =>
+    saveAddress: (address: Omit<Address, "id" | "isDefault"> & { id?: string | undefined; isDefault?: boolean | undefined }) =>
       update((s) => {
         const id = address.id ?? uid("a");
         const makeDefault = address.isDefault || s.addresses.length === 0;
@@ -270,7 +270,8 @@ function useStoreState() {
         const cart = [...s.cart];
         for (const it of order.items) {
           const i = cart.findIndex((c) => c.productId === it.productId && c.variantIndex === it.variantIndex);
-          if (i >= 0) cart[i] = { ...cart[i], qty: cart[i].qty + it.qty };
+          const existing = i >= 0 ? cart[i] : undefined;
+          if (existing) cart[i] = { ...existing, qty: existing.qty + it.qty };
           else cart.push({ productId: it.productId, variantIndex: it.variantIndex, qty: it.qty });
         }
         return { ...s, cart };

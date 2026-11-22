@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export function BackButton({ fallback = "/home", className }: { fallback?: string; className?: string }) {
+export function BackButton({ fallback = "/home", className }: { fallback?: string | undefined; className?: string }) {
   const router = useRouter();
   const navigate = useNavigate();
   return (
@@ -36,7 +36,7 @@ export function TopBar({
   subtitle?: string;
   right?: ReactNode;
   back?: boolean;
-  fallback?: string;
+  fallback?: string | undefined;
   className?: string;
 }) {
   return (

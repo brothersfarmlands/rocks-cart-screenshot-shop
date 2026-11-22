@@ -28,7 +28,7 @@ function Checkout() {
     { id: "newupi", label: "Pay via any UPI app", detail: "PhonePe, Paytm, BHIM & more", icon: Wallet },
     { id: "cod", label: "Cash on Delivery", detail: "Pay with cash or UPI at your door", icon: Banknote },
   ];
-  const [payment, setPayment] = useState(options[0].id);
+  const [payment, setPayment] = useState(options[0]?.id ?? "cod");
 
   useEffect(() => {
     if (cartLines.length === 0 && !placing) navigate({ to: "/cart", replace: true });

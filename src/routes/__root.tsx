@@ -137,7 +137,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </AppFrame>
-        <Toaster position="top-center" />
+        <Toaster position="bottom-center" offset={{ bottom: 150 }} mobileOffset={{ bottom: 150 }} />
       </StoreProvider>
     </QueryClientProvider>
   );

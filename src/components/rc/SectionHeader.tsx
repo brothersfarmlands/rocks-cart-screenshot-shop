@@ -25,7 +25,7 @@ export function SectionHeader({
       {action && (
         <Link
           to={action.to}
-          params={action.params}
+          params={(action.params ?? {}) as never}
           className="flex shrink-0 items-center text-sm font-bold text-leaf"
         >
           {action.label} <ChevronRight className="h-4 w-4" />

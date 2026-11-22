@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Frontend-only prototype: all data is mock data in `src/lib/data.ts`, and user state (cart, wishlist, addresses, orders, prefs) lives in the `StoreProvider` in `src/lib/store.tsx`, persisted to localStorage — the brief forbids backend/payment integrations at this stage.
+- Cart price rules (delivery fee, free-delivery threshold, coupons) live only in `src/lib/pricing.ts` and are covered by `pricing.test.ts`; screens must call these helpers instead of recomputing totals.
+- Reusable UI pieces live in `src/components/rc/`; screens compose them so the design maps cleanly onto a later Flutter build.
+- The app renders inside a 430px phone-width column (`AppFrame`); fixed bars use `max-w-[430px]` centred so desktop reviewers see the true mobile layout.

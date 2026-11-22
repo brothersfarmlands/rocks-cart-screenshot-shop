@@ -48,8 +48,8 @@ function CategoryPage() {
     let items = productsByCategory(category.slug);
     if (filter === "offer") items = items.filter((p) => p.tags.includes("offer"));
     if (filter === "instock") items = items.filter((p) => p.inStock);
-    const price = (p: (typeof items)[number]) => p.variants[defaultVariantIndex(p)].price;
-    const off = (p: (typeof items)[number]) => discountPercent(p.variants[defaultVariantIndex(p)]);
+    const price = (p: (typeof items)[number]) => p.variants[defaultVariantIndex(p)]!.price;
+    const off = (p: (typeof items)[number]) => discountPercent(p.variants[defaultVariantIndex(p)]!);
     if (sort === "low") items = [...items].sort((a, b) => price(a) - price(b));
     if (sort === "high") items = [...items].sort((a, b) => price(b) - price(a));
     if (sort === "discount") items = [...items].sort((a, b) => off(b) - off(a));

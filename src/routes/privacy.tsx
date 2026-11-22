@@ -116,7 +116,7 @@ function Privacy() {
             className="space-y-3"
             onSubmit={(e) => {
               e.preventDefault();
-              if (!/^[6-9]\d{9}$/.test(phone)) return toast.error("Enter a valid 10-digit mobile number");
+              if (!/^[6-9]\d{9}$/.test(phone)) { toast.error("Enter a valid 10-digit mobile number"); return; }
               updateUser({ phone: `${phone.slice(0, 5)} ${phone.slice(5)}` });
               setPhoneOpen(false);
               toast.success("Mobile number updated");

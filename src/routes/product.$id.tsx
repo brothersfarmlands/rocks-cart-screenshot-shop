@@ -43,7 +43,7 @@ function ProductPage() {
   const { getQty, setQty } = useStore();
   const [vi, setVi] = useState(defaultVariantIndex(product));
   const [qty, setLocalQty] = useState(1);
-  const v = product.variants[vi];
+  const v = product.variants[vi]!;
   const inCart = getQty(product.id, vi);
   const category = getCategory(product.category)!;
   const related = productsByCategory(product.category).filter((p) => p.id !== product.id);

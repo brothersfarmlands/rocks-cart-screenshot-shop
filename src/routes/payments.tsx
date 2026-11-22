@@ -26,11 +26,11 @@ function Payments() {
 
   const save = () => {
     if (type === "upi") {
-      if (!/^[\w.-]{2,}@[a-z]{2,}$/i.test(upi)) return toast.error("Enter a valid UPI ID, e.g. name@okaxis");
+      if (!/^[\w.-]{2,}@[a-z]{2,}$/i.test(upi)) { toast.error("Enter a valid UPI ID, e.g. name@okaxis"); return; }
       addPayment({ type: "upi", label: "UPI ID", detail: upi });
     } else {
       const digits = card.number.replace(/\D/g, "");
-      if (digits.length < 16 || !card.name.trim() || !/^\d{2}\/\d{2}$/.test(card.expiry)) return toast.error("Please complete all card details");
+      if (digits.length < 16 || !card.name.trim() || !/^\d{2}\/\d{2}$/.test(card.expiry)) { toast.error("Please complete all card details"); return; }
       addPayment({ type: "card", label: `${card.name.trim()}'s Card`, detail: `•••• ${digits.slice(-4)} · Exp ${card.expiry}` });
     }
     toast.success("Payment method saved");

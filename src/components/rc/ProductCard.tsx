@@ -13,7 +13,7 @@ export const defaultVariantIndex = (p: Product) => (p.variants.length === 3 ? 1 
 export function ProductCard({ product, className }: { product: Product; className?: string }) {
   const [sheet, setSheet] = useState(false);
   const vi = defaultVariantIndex(product);
-  const v = product.variants[vi];
+  const v = product.variants[vi]!;
   const off = discountPercent(v);
   const multi = product.variants.length > 1;
 

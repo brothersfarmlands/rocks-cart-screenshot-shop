@@ -35,7 +35,7 @@ function Wishlist() {
         <ul className="space-y-3 px-4">
           {items.map((p) => {
             const vi = defaultVariantIndex(p);
-            const v = p.variants[vi];
+            const v = p.variants[vi]!;
             return (
               <li key={p.id} className="flex gap-3 rounded-2xl bg-card p-3 shadow-card">
                 <Link to="/product/$id" params={{ id: p.id }} className="shrink-0">
