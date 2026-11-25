@@ -1,7 +1,7 @@
-# Pulses and Rice catalogue update
+# RocksCart single-page marketing website
 
-- [x] Generate separate photos for five pulses, three rice products, and the Rice category artwork.
-- [x] Add the five pulses under Pulses only and create Rice with its three products.
-- [x] Add search and category-count tests for all requested examples.
-- [x] Verify category listings, product details, search, cart quantity updates, and wishlist in the preview.
-- [x] Confirm the existing splash screen and other catalogue data are unchanged.
+- [x] Capture real app screens for the website graphics.
+- [x] Build the full-width single-page website with brand content, app previews and store buttons.
+- [x] Keep the mobile prototype routes unchanged and add website-specific metadata.
+- [x] Verify desktop/mobile layout, navigation anchors, store links and console health.
+- [ ] Replace temporary store destinations when the user supplies the live app listing URLs.

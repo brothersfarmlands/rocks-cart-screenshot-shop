@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -129,14 +130,20 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const isMarketingWebsite = pathname === "/website";
 
   return (
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
-        <AppFrame>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        {isMarketingWebsite ? (
           <Outlet />
-        </AppFrame>
+        ) : (
+          <AppFrame>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </AppFrame>
+        )}
         <Toaster position="bottom-center" offset={{ bottom: 150 }} mobileOffset={{ bottom: 150 }} />
       </StoreProvider>
     </QueryClientProvider>
