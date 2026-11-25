@@ -467,6 +467,10 @@ export const banners: Banner[] = [
     id: "b3", label: "BUY 2 SAVE ₹40", title: "Unpolished dals\nfor every kitchen", subtitle: "Protein-rich & double sorted",
     cta: "Shop Now", image: dalBanner, category: "pulses", tone: "leaf",
   },
+  {
+    id: "b4", label: "BASMATI BOUNTY", title: "Aged basmati,\nnow in 10 kg", subtitle: "Everyday, Super & Premium",
+    cta: "Shop Now", image: riceBanner, category: "rice", tone: "sun",
+  },
 ];
 
 export const popularSearches = ["Tomato", "Onion", "Mango", "Toor Dal", "Banana", "Rajma"];
