@@ -27,12 +27,14 @@ describe("bilingual product search", () => {
   });
 });
 
-it("vegetables category holds the 8 original + 49 new veg + 25 fruits products", () => {
-  expect(productsByCategory("vegetables")).toHaveLength(82);
+it("vegetables holds the 8 original + 49 new veg; the 25 new fruits sit under Fruits", () => {
+  expect(productsByCategory("vegetables")).toHaveLength(57);
+  expect(productsByCategory("fruits")).toHaveLength(32);
   expect(productsByCategory("vegetables").every((p) => p.image)).toBe(true);
+  expect(productsByCategory("fruits").every((p) => p.image)).toBe(true);
 });
 
-describe("fruits in the vegetables section", () => {
+describe("new fruits in the Fruits category", () => {
   const cases: [string, string][] = [
     ["avocado", "Avocado"], ["Nariyal", "Tender Coconut (Nariyal)"], ["tender coconut", "Tender Coconut (Nariyal)"],
     ["Amrud", "Guava (Amrud)"], ["Singhara", "Water Chestnut (Singhara)"], ["Chikoo", "Sapota (Chikoo)"],
@@ -41,9 +43,12 @@ describe("fruits in the vegetables section", () => {
     ["Anjeer", "Fig (Anjeer)"], ["STRAW", "Strawberry"],
   ];
   for (const [q, name] of cases) it(`"${q}" finds ${name}`, () => expect(top(q)).toContain(name));
-  it("adds Persimmon and Brown Coconut only once", () => {
-    const veg = productsByCategory("vegetables").map((p) => p.name);
-    expect(veg.filter((n) => n.startsWith("Persimmon"))).toHaveLength(1);
-    expect(veg.filter((n) => n.startsWith("Brown Coconut"))).toHaveLength(1);
+  it("adds Persimmon and Brown Coconut only once, under Fruits", () => {
+    const fruitList = productsByCategory("fruits").map((p) => p.name);
+    expect(fruitList.filter((n) => n.startsWith("Persimmon"))).toHaveLength(1);
+    expect(fruitList.filter((n) => n.startsWith("Brown Coconut"))).toHaveLength(1);
+    const vegList = productsByCategory("vegetables").map((p) => p.name);
+    expect(vegList.some((n) => n.startsWith("Persimmon"))).toBe(false);
+    expect(vegList.some((n) => n.startsWith("Brown Coconut"))).toBe(false);
   });
 });
