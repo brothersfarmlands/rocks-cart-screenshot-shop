@@ -27,7 +27,6 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShareRouteImport } from './routes/share'
-import { Route as WebsiteRouteImport } from './routes/website'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as OrderSuccessIdRouteImport } from './routes/order-success.$id'
@@ -124,11 +123,6 @@ const ShareRoute = ShareRouteImport.update({
   path: '/share',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WebsiteRoute = WebsiteRouteImport.update({
-  id: '/website',
-  path: '/website',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
@@ -174,7 +168,6 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
   '/share': typeof ShareRoute
-  '/website': typeof WebsiteRoute
   '/wishlist': typeof WishlistRoute
   '/category/$slug': typeof CategorySlugRoute
   '/order-success/$id': typeof OrderSuccessIdRoute
@@ -200,7 +193,6 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
   '/share': typeof ShareRoute
-  '/website': typeof WebsiteRoute
   '/wishlist': typeof WishlistRoute
   '/category/$slug': typeof CategorySlugRoute
   '/order-success/$id': typeof OrderSuccessIdRoute
@@ -227,7 +219,6 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
   '/share': typeof ShareRoute
-  '/website': typeof WebsiteRoute
   '/wishlist': typeof WishlistRoute
   '/category/$slug': typeof CategorySlugRoute
   '/order-success/$id': typeof OrderSuccessIdRoute
@@ -255,7 +246,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/search'
     | '/share'
-    | '/website'
     | '/wishlist'
     | '/category/$slug'
     | '/order-success/$id'
@@ -281,7 +271,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/search'
     | '/share'
-    | '/website'
     | '/wishlist'
     | '/category/$slug'
     | '/order-success/$id'
@@ -307,7 +296,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/search'
     | '/share'
-    | '/website'
     | '/wishlist'
     | '/category/$slug'
     | '/order-success/$id'
@@ -334,7 +322,6 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   SearchRoute: typeof SearchRoute
   ShareRoute: typeof ShareRoute
-  WebsiteRoute: typeof WebsiteRoute
   WishlistRoute: typeof WishlistRoute
   CategorySlugRoute: typeof CategorySlugRoute
   OrderSuccessIdRoute: typeof OrderSuccessIdRoute
@@ -470,13 +457,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/website': {
-      id: '/website'
-      path: '/website'
-      fullPath: '/website'
-      preLoaderRoute: typeof WebsiteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/wishlist': {
       id: '/wishlist'
       path: '/wishlist'
@@ -534,7 +514,6 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   SearchRoute: SearchRoute,
   ShareRoute: ShareRoute,
-  WebsiteRoute: WebsiteRoute,
   WishlistRoute: WishlistRoute,
   CategorySlugRoute: CategorySlugRoute,
   OrderSuccessIdRoute: OrderSuccessIdRoute,
