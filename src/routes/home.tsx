@@ -58,9 +58,11 @@ function Home() {
 
         <section>
           <SectionHeader title="Shop by Category" action={{ label: "All", to: "/categories" }} />
-          <div className="grid grid-cols-3 gap-3 px-4">
+          <div className="no-scrollbar flex snap-x gap-3 overflow-x-auto px-4 pb-1">
             {categories.map((c) => (
-              <CategoryTile key={c.slug} category={c} />
+              <div key={c.slug} className="w-[calc((100%-1.5rem)/3)] shrink-0 snap-start">
+                <CategoryTile category={c} />
+              </div>
             ))}
           </div>
         </section>
