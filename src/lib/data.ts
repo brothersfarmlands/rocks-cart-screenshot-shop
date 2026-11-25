@@ -69,6 +69,7 @@ export interface Product {
   inStock: boolean;
   tags: ("bestseller" | "fresh" | "offer" | "recommended")[];
   rating: number;
+  keywords?: string[];
 }
 
 // Builds 250g / 500g / 1kg variants from a per-kg price and MRP.
@@ -76,6 +77,69 @@ const kgVariants = (perKg: number, mrpKg: number): Variant[] => [
   { label: "250 g", price: Math.round(perKg * 0.28), mrp: Math.round(mrpKg * 0.28) },
   { label: "500 g", price: Math.round(perKg * 0.53), mrp: Math.round(mrpKg * 0.53) },
   { label: "1 kg", price: perKg, mrp: mrpKg },
+];
+
+// Fresh Vegetables catalogue extension. `name` shows English with the Hindi/local
+// name in brackets; `localName` + `keywords` power bilingual search.
+const pcs = (label: string, price: number, mrp: number): Variant => ({ label, price, mrp });
+const veg = (
+  id: string, name: string, localName: string, variants: Variant[], keywords: string[],
+  origin: string, shelfLife: string, description: string, rating = 4.4,
+): Product => ({
+  id, name, localName, category: "vegetables", image: img(id), variants, keywords,
+  origin, shelfLife, inStock: true, tags: [], rating, description,
+});
+
+const newVegetables: Product[] = [
+  veg("beetroot", "Beetroot (Chukanadar)", "Chukanadar", kgVariants(48, 60), ["chukandar", "beet"], "Ooty, Tamil Nadu", "7–10 days", "Deep-red, earthy-sweet beetroot. Great for salads, juices, halwa and poriyal."),
+  veg("mint", "Mint Leaves (Pudina)", "Pudina", [pcs("1 bunch (100 g)", 15, 20), pcs("2 bunches", 28, 40)], ["podina", "mint"], "Local farms", "2–3 days", "Fragrant, freshly bunched mint for chutney, raita, chaas and biryani."),
+  veg("yellowbellpepper", "Yellow Bell Pepper", "Peeli Shimla Mirch", [pcs("1 pc (200–250 g)", 59, 75), pcs("2 pcs", 112, 150)], ["capsicum", "shimla mirch", "yellow capsicum"], "Pune, Maharashtra", "5–7 days", "Sweet, crunchy yellow bell pepper for salads, stir-fries and pasta."),
+  veg("amla", "Amla", "Indian Gooseberry", kgVariants(90, 115), ["aamla", "gooseberry", "awla"], "Pratapgarh, Uttar Pradesh", "7–10 days", "Tangy, vitamin C-rich amla for murabba, pickle, juice and chutney."),
+  veg("sweetpotato", "Sweet Potato", "Shakarkandi", kgVariants(56, 70), ["shakarkand", "shakarkandi"], "Odisha", "10–14 days", "Naturally sweet, starchy sweet potatoes – roast them, make chaat or tikki."),
+  veg("parwal", "Pointed Gourd (Parmal)", "Parmal", kgVariants(70, 90), ["parwal", "parval", "potol"], "Bihar", "3–4 days", "Tender striped parwal for parwal ki sabzi, bharwa parwal and curries."),
+  veg("capsicummix", "Assorted Capsicum (Red, Yellow, Green)", "Shimla Mirch", [pcs("3 pcs (500–600 g)", 129, 165)], ["bell pepper", "shimla mirch", "capsicum mix"], "Pune, Maharashtra", "5–7 days", "A colourful trio of red, yellow and green capsicums for salads and stir-fries."),
+  veg("lettuce", "Green Lettuce", "Salad Patta", [pcs("1 pc (150–200 g)", 45, 60)], ["salad", "lettuce"], "Nilgiris, Tamil Nadu", "3–4 days", "Crisp, ruffled green lettuce – perfect for salads, wraps and burgers."),
+  veg("karela", "Bitter Gourd (Karela)", "Karela", kgVariants(60, 78), ["karela", "bitter melon"], "Local farms", "4–5 days", "Fresh, bumpy karela for bharwa karela, chips and healthy sabzi."),
+  veg("brinjalsmall", "Small Purple Brinjal (Baingan)", "Baingan", kgVariants(48, 60), ["brinjal", "eggplant", "chhote baingan", "bharwa baingan"], "Nashik, Maharashtra", "4–5 days", "Small round brinjals, ideal for bharwa baingan and baingan masala."),
+  veg("brinjallong", "Long Purple Brinjal (Baingan)", "Baingan", kgVariants(44, 56), ["brinjal", "eggplant", "lamba baingan"], "Karnataka", "4–5 days", "Slender long brinjals with soft seeds for fries, curries and stir-fries."),
+  veg("sarsosaag", "Mustard Leaves (Sarso Saag)", "Sarso Saag", [pcs("1 bunch (500 g)", 35, 45), pcs("1 kg", 65, 90)], ["sarson", "sarson ka saag", "mustard greens"], "Punjab", "2–3 days", "Fresh mustard greens for the winter classic sarson ka saag with makki roti."),
+  veg("coriander", "Coriander Bunch (Dhaniya Patta)", "Dhaniya Patta", [pcs("1 bunch (100 g)", 15, 20), pcs("2 bunches", 28, 40)], ["dhania", "dhaniya", "cilantro", "kothmir"], "Local farms", "2–3 days", "Aromatic fresh coriander to garnish dals, curries and chaats."),
+  veg("ginger", "Ginger (Adrak)", "Adrak", [pcs("100 g", 18, 24), pcs("250 g", 42, 55)], ["adrak", "adrakh"], "Kerala", "10–14 days", "Juicy, pungent ginger for chai, tadka and ginger-garlic paste."),
+  veg("lemon", "Lemon", "Nimbu", [pcs("4 pcs", 20, 28), pcs("8 pcs", 38, 56)], ["nimbu", "lime", "neembu"], "Andhra Pradesh", "7–10 days", "Juicy lemons for nimbu pani, dal, salads and pickles."),
+  veg("englishcucumber", "English Cucumber", "Kheera", [pcs("1 pc (300–350 g)", 35, 45), pcs("2 pcs", 66, 90)], ["kheera", "khira", "cucumber"], "Pune, Maharashtra", "5–6 days", "Long, seedless English cucumber with thin skin – crisp for salads and sandwiches."),
+  veg("greencapsicum", "Green Capsicum (Shimla Mirch)", "Shimla Mirch", kgVariants(70, 90), ["capsicum", "bell pepper"], "Himachal Pradesh", "5–6 days", "Glossy green capsicum for aloo shimla mirch, pizzas and Chinese dishes."),
+  veg("orangecarrot", "Orange Carrot (Gajar)", "Gajar", kgVariants(56, 70), ["gajar", "carrot", "ooty carrot"], "Ooty, Tamil Nadu", "7–10 days", "Sweet, crunchy orange carrots for salads, juices and sabzi."),
+  veg("hybridtomato", "Hybrid Tomato", "Tamatar", kgVariants(36, 46), ["tamatar", "tomato"], "Kolar, Karnataka", "4–5 days", "Firm, uniform hybrid tomatoes with longer shelf life – great for gravies."),
+  veg("mushroom", "Button Mushroom", "Khumbi", [pcs("1 pack (200 g)", 45, 60), pcs("2 packs", 86, 120)], ["khumb", "khumbi", "mushroom"], "Sonipat, Haryana", "2–3 days", "Fresh white button mushrooms for mushroom masala, pizzas and soups."),
+  veg("frenchbeans", "French Beans", "Beans", kgVariants(80, 100), ["fansi", "beans", "green beans"], "Bengaluru, Karnataka", "3–4 days", "Tender stringless French beans for poriyal, pulao and mixed veg."),
+  veg("lauki", "Bottle Gourd (Lauki)", "Lauki", [pcs("1 pc (700 g–1 kg)", 35, 45)], ["lauki", "doodhi", "ghiya"], "Local farms", "4–5 days", "Light, tender lauki for lauki chana dal, kofta and halwa."),
+  veg("redcarrot", "Red Carrot (Gajar)", "Gajar", kgVariants(50, 64), ["gajar", "delhi carrot", "lal gajar"], "Haryana", "7–10 days", "Juicy red winter carrots – made for gajar ka halwa and kanji."),
+  veg("broccoli", "Broccoli", "Hari Gobhi", [pcs("1 pc (250–300 g)", 59, 80)], ["hari gobi", "broccoli"], "Nilgiris, Tamil Nadu", "3–4 days", "Fresh, tight-floret broccoli for stir-fries, soups and salads."),
+  veg("garlic", "Garlic (Lehsun)", "Lehsun", [pcs("100 g", 22, 30), pcs("250 g", 52, 70)], ["lahsun", "lasun", "lehsan"], "Mandsaur, Madhya Pradesh", "20–30 days", "Bold, aromatic garlic bulbs for tadka, chutneys and pickles."),
+  veg("methi", "Fenugreek (Methi)", "Methi", [pcs("1 bunch (250 g)", 20, 25), pcs("2 bunches", 38, 50)], ["methi", "fenugreek leaves"], "Local farms", "1–2 days", "Fresh methi leaves for methi paratha, aloo methi and thepla."),
+  veg("mooli", "Radish (Mooli)", "Mooli", kgVariants(36, 46), ["muli", "mooli", "radish"], "Local farms", "4–5 days", "Crisp white radish with leaves for mooli paratha and salads."),
+  veg("bhartabrinjal", "Brinjal Bharta (Baingan)", "Baingan", kgVariants(50, 64), ["bharta", "bharta baingan", "brinjal", "eggplant"], "Local farms", "4–5 days", "Large round brinjals with few seeds – ideal for smoky baingan bharta."),
+  veg("redbellpepper", "Red Bell Pepper", "Lal Shimla Mirch", [pcs("1 pc (200–250 g)", 59, 75), pcs("2 pcs", 112, 150)], ["capsicum", "shimla mirch", "red capsicum"], "Pune, Maharashtra", "5–7 days", "Sweet, juicy red bell pepper for salads, pasta and grilling."),
+  veg("greenpeas", "Green Peas (Matar)", "Matar", kgVariants(80, 100), ["matar", "mutter", "peas"], "Jabalpur, Madhya Pradesh", "3–4 days", "Sweet green pea pods for matar paneer, pulao and aloo matar."),
+  veg("cabbage", "Cabbage (Patta Gobhi)", "Patta Gobhi", [pcs("1 pc (500–800 g)", 30, 40)], ["patta gobi", "band gobhi", "cabbage"], "Karnataka", "7–10 days", "Firm green cabbage for sabzi, coleslaw and momos."),
+  veg("curryleaves", "Curry Leaves (Kadi Patta)", "Kadi Patta", [pcs("1 bunch (50 g)", 10, 15)], ["kadi patta", "kari patta", "curry patta", "meetha neem"], "Local farms", "4–5 days", "Glossy, aromatic curry leaves for tadka, sambar and poha."),
+  veg("springonion", "Spring Onion (Hari Pyaaz)", "Hari Pyaaz", [pcs("1 bunch (200 g)", 25, 32)], ["hara pyaz", "hari pyaz", "scallion"], "Local farms", "3–4 days", "Fresh spring onions for Chinese dishes, parathas and garnish."),
+  veg("sweetcorn", "Sweet Corn (Packet)", "Makka", [pcs("1 packet (200 g)", 45, 55), pcs("2 packets", 86, 110)], ["makka", "makai", "bhutta", "corn"], "Karnataka", "3–4 days", "Ready-to-cook sweet corn kernels for chaat, soups and salads."),
+  veg("broadbeans", "Broad Beans (Sem Phali)", "Sem Phali", kgVariants(70, 90), ["sem", "sem phali", "papdi"], "Local farms", "3–4 days", "Flat, tender sem phali for aloo sem and mixed veg sabzi."),
+  veg("arvi", "Arvi", "Colocasia", kgVariants(60, 76), ["arbi", "taro", "colocasia", "arvi"], "Uttar Pradesh", "7–10 days", "Fresh arvi (taro root) for crispy arbi fry and arbi masala."),
+  veg("babypotato", "Baby Potato (Aloo)", "Aloo", kgVariants(50, 64), ["aloo", "chhote aloo", "potato"], "Agra, Uttar Pradesh", "10–12 days", "Small, smooth baby potatoes for dum aloo and roasted aloo."),
+  veg("babycorn", "Baby Corn", "Baby Makka", [pcs("1 pack (200 g)", 40, 50)], ["corn", "makka", "baby corn"], "Karnataka", "3–4 days", "Tender, crunchy baby corn for chilli baby corn and stir-fries."),
+  veg("drumstick", "Drumstick (Sahjan)", "Sahjan", [pcs("250 g", 30, 40), pcs("500 g", 56, 76)], ["sahjan", "moringa", "saijan", "murungakkai"], "Tamil Nadu", "4–5 days", "Fresh, fleshy drumsticks for sambar and drumstick curry."),
+  veg("tinda", "Round Gourd (Tinda)", "Tinda", kgVariants(60, 78), ["tinda", "tinde", "apple gourd"], "Rajasthan", "4–5 days", "Tender tinda for tinda masala and bharwa tinde."),
+  veg("kundru", "Ivy Gourd (Kundru)", "Kundru", kgVariants(56, 72), ["kundru", "tindora", "tondli"], "Local farms", "3–4 days", "Crunchy kundru for kundru fry and simple sabzi."),
+  veg("spongegourd", "Sponge Gourd", "Gilki", kgVariants(50, 64), ["gilki", "nenua", "torai", "turai", "tori"], "Local farms", "3–4 days", "Soft, mild sponge gourd for light sabzi and dal."),
+  veg("gwarphali", "Cluster Beans (Gwar Phali)", "Gwar Phali", kgVariants(70, 90), ["gawar", "guar", "gwar"], "Rajasthan", "3–4 days", "Tender gwar phali for Rajasthani gwar ki sabzi."),
+  veg("rawpapaya", "Raw Papaya (Kacha Papita)", "Kacha Papita", [pcs("1 pc (800 g–1.2 kg)", 40, 52)], ["papita", "kachcha papita", "green papaya"], "Andhra Pradesh", "5–7 days", "Firm raw papaya for sabzi, salads and papaya chutney."),
+  veg("jackfruit", "Jack Fruit (Kathal)", "Kathal", [pcs("500 g (cut)", 45, 60), pcs("1 kg (cut)", 85, 115)], ["kathal", "jackfruit", "kathhal"], "Kerala", "2–3 days", "Raw jackfruit, cut and cleaned – ideal for kathal masala and biryani."),
+  veg("gollauki", "Round Bottle Gourd (Gol Lauki)", "Gol Lauki", [pcs("1 pc (700 g–1 kg)", 38, 48)], ["gol lauki", "lauki", "round lauki"], "Local farms", "4–5 days", "Round, tender lauki for kofta, raita and sabzi."),
+  veg("lotusstem", "Lotus Stem Cut (Kamal Kakdi)", "Kamal Kakdi", [pcs("250 g", 60, 78), pcs("500 g", 115, 155)], ["kamal kakri", "bhen", "nadru", "lotus root"], "Kashmir", "4–5 days", "Cleaned lotus stem pieces for nadru yakhni, kofta and chips."),
+  veg("rawbanana", "Raw Banana (Kacha Kela)", "Kacha Kela", [pcs("4 pcs", 30, 40), pcs("8 pcs", 56, 80)], ["kela", "kachcha kela", "plantain"], "Kerala", "4–6 days", "Firm green bananas for kele ki sabzi, chips and kofta."),
+  veg("ashgourd", "Ash Gourd (Safed Petha)", "Safed Petha", [pcs("1 kg (cut)", 40, 52)], ["petha", "kumhra", "winter melon", "white pumpkin"], "Local farms", "7–10 days", "Mild ash gourd for petha sweet, sambar and healthy juices."),
 ];
 
 export const products: Product[] = [
@@ -140,6 +204,7 @@ export const products: Product[] = [
     tags: ["fresh"], rating: 4.2,
     description: "Leafy, iron-rich spinach washed and bunched at the farm. Perfect for palak paneer and dal palak.",
   },
+  ...newVegetables,
   // Fruits
   {
     id: "apple", name: "Shimla Apple", localName: "Seb", category: "fruits", image: img("apple"),
@@ -252,15 +317,26 @@ export const productsByTag = (tag: Product["tags"][number]) => products.filter((
 
 export const discountPercent = (v: Variant) => (v.mrp > v.price ? Math.round(((v.mrp - v.price) / v.mrp) * 100) : 0);
 
+const normalize = (t: string) => t.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+
+// Bilingual search: matches English name, Hindi/local name or keywords – full,
+// partial and case-insensitive. Every word typed must appear somewhere.
 export const searchProducts = (q: string) => {
-  const term = q.trim().toLowerCase();
+  const term = normalize(q);
   if (!term) return [];
-  return products.filter(
-    (p) =>
-      p.name.toLowerCase().includes(term) ||
-      p.localName.toLowerCase().includes(term) ||
-      p.category.includes(term),
-  );
+  const words = term.split(" ");
+  const scored: { p: Product; score: number }[] = [];
+  for (const p of products) {
+    const fields = [p.name, p.localName, ...(p.keywords ?? [])].map(normalize);
+    const hay = [...fields, p.category].join(" | ");
+    if (!words.every((w) => hay.includes(w))) continue;
+    let score = 3;
+    if (fields.some((f) => f === term)) score = 0;
+    else if (fields.some((f) => f.startsWith(term) || f.includes(" " + term))) score = 1;
+    else if (fields.some((f) => f.includes(term))) score = 2;
+    scored.push({ p, score });
+  }
+  return scored.sort((a, b) => a.score - b.score).map((s) => s.p);
 };
 
 export interface Banner {
