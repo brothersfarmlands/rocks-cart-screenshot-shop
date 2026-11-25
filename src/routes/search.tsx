@@ -11,7 +11,7 @@ import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/search")({
   validateSearch: z.object({ q: z.string().catch("") }),
-  head: () => pageHead("Search", "Search fresh vegetables, fruits and pulses on RocksCart."),
+  head: () => pageHead("Search", "Search fresh vegetables, fruits, pulses and rice on RocksCart."),
   component: SearchPage,
 });
 
@@ -60,7 +60,7 @@ function SearchPage() {
         <div className="flex flex-col items-center px-8 py-16 text-center">
           <SearchX className="h-14 w-14 text-muted-foreground" />
           <h2 className="mt-4 text-lg font-extrabold text-primary">No results for "{q}"</h2>
-          <p className="mt-1 text-sm text-muted-foreground">We currently stock vegetables, fruits and pulses. Try "tomato" or "dal".</p>
+          <p className="mt-1 text-sm text-muted-foreground">We currently stock vegetables, fruits, pulses and rice. Try "tomato", "dal" or "basmati".</p>
         </div>
       )}
     </Page>

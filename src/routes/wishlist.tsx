@@ -13,7 +13,7 @@ import { useStore } from "@/lib/store";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/wishlist")({
-  head: () => pageHead("My Wishlist", "Your saved vegetables, fruits and pulses on RocksCart."),
+  head: () => pageHead("My Wishlist", "Your saved vegetables, fruits, pulses and rice on RocksCart."),
   component: Wishlist,
 });
 

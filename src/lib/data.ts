@@ -1,9 +1,11 @@
 import vegBanner from "@/assets/banners/veg.webp";
 import fruitBanner from "@/assets/banners/fruit.webp";
 import dalBanner from "@/assets/banners/dal.webp";
+import riceBanner from "@/assets/banners/rice.webp";
 import vegCat from "@/assets/categories/veg.webp";
 import fruitCat from "@/assets/categories/fruit.webp";
 import dalCat from "@/assets/categories/dal.webp";
+import riceCat from "@/assets/categories/rice.webp";
 
 const productImages = import.meta.glob("../assets/products/*.webp", {
   eager: true,
@@ -12,7 +14,7 @@ const productImages = import.meta.glob("../assets/products/*.webp", {
 
 const img = (key: string) => productImages[`../assets/products/${key}.webp`] ?? "";
 
-export type CategorySlug = "vegetables" | "fruits" | "pulses";
+export type CategorySlug = "vegetables" | "fruits" | "pulses" | "rice";
 
 export interface Category {
   slug: CategorySlug;
@@ -46,6 +48,14 @@ export const categories: Category[] = [
     tagline: "Unpolished, protein-rich dals",
     image: dalCat,
     banner: dalBanner,
+    tone: "leaf",
+  },
+  {
+    slug: "rice",
+    name: "Rice",
+    tagline: "Aromatic basmati for every meal",
+    image: riceCat,
+    banner: riceBanner,
     tone: "leaf",
   },
 ];
@@ -180,6 +190,55 @@ const newFruits: Product[] = [
   fruit("litchi", "Lychee (Litchi)", "Litchi", [pcs("500 g", 120, 150), pcs("1 kg", 230, 300)], ["lichi", "lychee", "leechi"], "Muzaffarpur, Bihar", "2–3 days", "Juicy, floral Shahi litchis from Muzaffarpur."),
   fruit("anjeer", "Fig (Anjeer)", "Anjeer", [pcs("250 g", 120, 150)], ["anjir", "fig"], "Pune, Maharashtra", "2–3 days", "Fresh, honey-sweet figs with jammy pink centres."),
   fruit("strawberry", "Strawberry", "Strawberry", [pcs("1 box (200 g)", 99, 125), pcs("2 boxes", 189, 250)], ["strawberries", "stroberi"], "Mahabaleshwar, Maharashtra", "2–3 days", "Sweet, juicy Mahabaleshwar strawberries."),
+];
+
+// Pulses and rice catalogue extension. Pantry items share the same Product
+// structure as fresh produce; empty tags keep existing home rails unchanged.
+const pantryItem = (
+  id: string, name: string, localName: string, category: "pulses" | "rice",
+  variants: Variant[], keywords: string[], origin: string, shelfLife: string,
+  description: string, rating = 4.5,
+): Product => ({
+  id, name, localName, category, image: img(id), variants, keywords,
+  origin, shelfLife, inStock: true, tags: [], rating, description,
+});
+
+const newPulses: Product[] = [
+  pantryItem("masoorredlentils", "Masoor (Red Lentils)", "Lal Masoor", "pulses",
+    [pcs("500 g", 70, 88), pcs("1 kg", 135, 165)],
+    ["masoor", "masur", "red lentils", "lal masoor", "masoor dal", "pulses"],
+    "Madhya Pradesh", "9 months", "Quick-cooking red lentils with a mild, earthy flavour – ideal for everyday dal, soups and khichdi."),
+  pantryItem("arhartoordal", "Arhar (Toor Dal)", "Arhar Dal", "pulses",
+    [pcs("500 g", 90, 110), pcs("1 kg", 175, 210)],
+    ["arhar", "arhar dal", "toor dal", "tur dal", "tuvar dal", "pigeon peas", "pulses"],
+    "Latur, Maharashtra", "9 months", "Protein-rich arhar dal that cooks soft and creamy for dal fry, sambar and everyday dal-chawal.", 4.6),
+  pantryItem("moongchilka", "Moong Chilka (Split Green Gram with Skin)", "Moong Chilka", "pulses",
+    [pcs("500 g", 80, 98), pcs("1 kg", 155, 190)],
+    ["moong chilka", "chilka moong", "split green gram", "green moong dal", "moong dal chilka", "pulses"],
+    "Rajasthan", "9 months", "Split green moong with its flavourful skin intact – a wholesome choice for dal, khichdi and cheela."),
+  pantryItem("kalachana", "Kala Chana (Black Chickpeas)", "Kala Chana", "pulses",
+    [pcs("500 g", 65, 82), pcs("1 kg", 125, 155)],
+    ["kala chana", "kale chane", "black chickpeas", "brown chana", "chana", "pulses"],
+    "Madhya Pradesh", "12 months", "Firm, nutty black chickpeas for chana masala, salads, sprouts and festive Ashtami prasad.", 4.6),
+  pantryItem("moongsabut", "Moong Sabut (Whole Green Gram)", "Sabut Moong", "pulses",
+    [pcs("500 g", 78, 96), pcs("1 kg", 150, 185)],
+    ["moong sabut", "sabut moong", "whole moong", "whole green gram", "green mung beans", "hari moong", "pulses"],
+    "Rajasthan", "9 months", "Whole green gram with skins intact – perfect for sprouting, moong curry, khichdi and hearty salads."),
+];
+
+const newRice: Product[] = [
+  pantryItem("everydaybasmati", "Everyday Basmati Rice", "Rozana Basmati Chawal", "rice",
+    [pcs("1 kg", 89, 110), pcs("5 kg", 425, 525), pcs("10 kg", 829, 1040)],
+    ["everyday basmati", "daily basmati", "basmati rice", "chawal", "chaval", "rice"],
+    "Karnal, Haryana", "12 months", "Long-grain basmati for dependable everyday meals, from steamed rice and pulao to jeera rice."),
+  pantryItem("superbasmati", "Super Basmati Rice", "Super Basmati Chawal", "rice",
+    [pcs("1 kg", 119, 145), pcs("5 kg", 575, 700), pcs("10 kg", 1129, 1380)],
+    ["super basmati", "super basmati rice", "basmati rice", "chawal", "chaval", "rice"],
+    "Karnal, Haryana", "18 months", "Extra-long, aromatic basmati grains that cook fluffy and separate – great for pulao and special dinners.", 4.7),
+  pantryItem("premiumbasmati", "Premium Basmati Rice", "Premium Basmati Chawal", "rice",
+    [pcs("1 kg", 149, 185), pcs("5 kg", 725, 900), pcs("10 kg", 1425, 1775)],
+    ["premium basmati", "premium basmati rice", "aged basmati", "basmati rice", "chawal", "chaval", "rice"],
+    "Karnal, Haryana", "24 months", "Premium aged basmati with exceptional aroma and extra-long grains – made for biryani and celebratory meals.", 4.8),
 ];
 
 export const products: Product[] = [
@@ -349,6 +408,9 @@ export const products: Product[] = [
     tags: ["bestseller", "recommended"], rating: 4.8,
     description: "Plump, deep-red kidney beans that cook soft and creamy – made for Sunday rajma-chawal.",
   },
+  ...newPulses,
+  // Rice
+  ...newRice,
 ];
 
 export const getProduct = (id: string) => products.find((p) => p.id === id);

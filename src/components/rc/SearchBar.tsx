@@ -3,7 +3,7 @@ import { Mic, Search, X } from "lucide-react";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-export const SEARCH_PLACEHOLDER = "Search vegetables, fruits, pulses...";
+export const SEARCH_PLACEHOLDER = "Search vegetables, fruits, pulses, rice...";
 
 export function SearchLink({ className }: { className?: string }) {
   return (

@@ -7,14 +7,14 @@ import { categories } from "@/lib/data";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/categories")({
-  head: () => pageHead("Categories", "Browse RocksCart categories: fresh vegetables, fresh fruits and pulses."),
+  head: () => pageHead("Categories", "Browse RocksCart categories: fresh vegetables, fresh fruits, pulses and rice."),
   component: Categories,
 });
 
 function Categories() {
   return (
     <Page>
-      <TopBar title="Categories" subtitle="Everything fresh, in three aisles" back={false} />
+      <TopBar title="Categories" subtitle="Everything fresh, in four aisles" back={false} />
       <div className="space-y-4 px-4">
         <SearchLink />
         {categories.map((c) => (

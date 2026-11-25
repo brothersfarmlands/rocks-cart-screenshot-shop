@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { productsByCategory, searchProducts } from "./data";
+import { categories, getProduct, productsByCategory, searchProducts } from "./data";
 
 const top = (q: string) => searchProducts(q).map((p) => p.name);
 
@@ -32,6 +32,50 @@ it("vegetables holds the 8 original + 49 new veg; the 25 new fruits sit under Fr
   expect(productsByCategory("fruits")).toHaveLength(32);
   expect(productsByCategory("vegetables").every((p) => p.image)).toBe(true);
   expect(productsByCategory("fruits").every((p) => p.image)).toBe(true);
+});
+
+describe("new pulses and the separate Rice category", () => {
+  const cases: [string, string][] = [
+    ["Masoor", "Masoor (Red Lentils)"],
+    ["Red Lentils", "Masoor (Red Lentils)"],
+    ["Arhar", "Arhar (Toor Dal)"],
+    ["Toor Dal", "Arhar (Toor Dal)"],
+    ["Moong Chilka", "Moong Chilka (Split Green Gram with Skin)"],
+    ["Kala Chana", "Kala Chana (Black Chickpeas)"],
+    ["Black Chickpeas", "Kala Chana (Black Chickpeas)"],
+    ["Moong Sabut", "Moong Sabut (Whole Green Gram)"],
+    ["Whole Green Gram", "Moong Sabut (Whole Green Gram)"],
+    ["Everyday Basmati Rice", "Everyday Basmati Rice"],
+    ["Super Basmati Rice", "Super Basmati Rice"],
+    ["Premium Basmati Rice", "Premium Basmati Rice"],
+  ];
+  for (const [q, name] of cases) it(`"${q}" finds ${name}`, () => expect(top(q)).toContain(name));
+
+  it("supports partial and case-insensitive names", () => {
+    expect(top("everyday bas")).toContain("Everyday Basmati Rice");
+    expect(top("kAlA cHa")).toContain("Kala Chana (Black Chickpeas)");
+    expect(top("sabut")).toContain("Moong Sabut (Whole Green Gram)");
+  });
+
+  it("adds five pulses only to Pulses and three rice products only to Rice", () => {
+    expect(categories.map((c) => c.slug)).toContain("rice");
+    expect(productsByCategory("pulses")).toHaveLength(11);
+    expect(productsByCategory("rice")).toHaveLength(3);
+    expect(productsByCategory("pulses").every((p) => p.image)).toBe(true);
+    expect(productsByCategory("rice").every((p) => p.image)).toBe(true);
+    expect(productsByCategory("rice").map((p) => p.id)).toEqual([
+      "everydaybasmati", "superbasmati", "premiumbasmati",
+    ]);
+  });
+
+  it("uses the requested pulse and rice pack sizes", () => {
+    for (const id of ["masoorredlentils", "arhartoordal", "moongchilka", "kalachana", "moongsabut"]) {
+      expect(getProduct(id)?.variants.map((v) => v.label)).toEqual(["500 g", "1 kg"]);
+    }
+    for (const id of ["everydaybasmati", "superbasmati", "premiumbasmati"]) {
+      expect(getProduct(id)?.variants.map((v) => v.label)).toEqual(["1 kg", "5 kg", "10 kg"]);
+    }
+  });
 });
 
 describe("new fruits in the Fruits category", () => {

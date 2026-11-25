@@ -13,7 +13,7 @@ import { useStore } from "@/lib/store";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/home")({
-  head: () => pageHead("Home", "Shop fresh vegetables, fruits and pulses with RocksCart – best sellers, fresh arrivals and daily offers."),
+  head: () => pageHead("Home", "Shop fresh vegetables, fruits, pulses and rice with RocksCart – best sellers, fresh arrivals and daily offers."),
   component: Home,
 });
 
