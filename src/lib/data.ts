@@ -142,6 +142,40 @@ const newVegetables: Product[] = [
   veg("ashgourd", "Ash Gourd (Safed Petha)", "Safed Petha", [pcs("1 kg (cut)", 40, 52)], ["petha", "kumhra", "winter melon", "white pumpkin"], "Local farms", "7–10 days", "Mild ash gourd for petha sweet, sambar and healthy juices."),
 ];
 
+// Fruits the client asked to list inside the Fresh Vegetables category.
+const vfruit = (
+  id: string, name: string, localName: string, variants: Variant[], keywords: string[],
+  origin: string, shelfLife: string, description: string, rating = 4.5,
+): Product => veg(id, name, localName, variants, [...keywords, "fruit", "phal"], origin, shelfLife, description, rating);
+
+const vegSectionFruits: Product[] = [
+  vfruit("avocado", "Avocado", "Makhanphal", [pcs("1 pc (180–220 g)", 99, 129), pcs("2 pcs", 189, 258)], ["butter fruit", "makhan phal"], "Coorg, Karnataka", "3–5 days", "Creamy, buttery avocado for toast, salads and guacamole."),
+  vfruit("dragonfruit", "Dragon Fruit", "Kamalam", [pcs("1 pc (300–400 g)", 79, 99), pcs("2 pcs", 150, 198)], ["kamalam", "pitaya"], "Gujarat", "5–7 days", "Vibrant pink dragon fruit with mildly sweet, seed-speckled flesh."),
+  vfruit("kiwi", "Kiwi", "Kiwi", [pcs("3 pcs", 75, 95), pcs("6 pcs", 145, 190)], ["kiwifruit", "chinese gooseberry"], "Imported", "7–10 days", "Tangy-sweet green kiwis packed with vitamin C."),
+  vfruit("tendercoconut", "Tender Coconut (Nariyal)", "Nariyal", [pcs("1 coconut", 55, 70), pcs("3 coconuts", 159, 210)], ["nariyal pani", "coconut water", "daab", "hara nariyal", "coconut"], "Kerala", "5–7 days", "Fresh green tender coconut full of sweet, refreshing coconut water."),
+  vfruit("browncoconut", "Brown Coconut (Nariyal)", "Nariyal", [pcs("1 coconut", 40, 50), pcs("2 coconuts", 78, 100)], ["sukha nariyal", "coconut", "mature coconut", "gola"], "Kerala", "15–20 days", "Mature brown coconut for chutneys, curries and puja."),
+  vfruit("guava", "Guava (Amrud)", "Amrud", kgVariants(80, 100), ["amrood", "peru", "jamfal"], "Allahabad, Uttar Pradesh", "4–5 days", "Crunchy, fragrant guavas – enjoy with a pinch of chaat masala."),
+  vfruit("redgrapes", "Red Grapes", "Lal Angoor", [pcs("500 g", 79, 99), pcs("1 kg", 150, 198)], ["angoor", "grapes", "red globe"], "Nashik, Maharashtra", "4–6 days", "Juicy, crisp red grapes – sweet and snackable."),
+  vfruit("singhara", "Water Chestnut (Singhara)", "Singhara", kgVariants(70, 90), ["singada", "paniphal", "water chestnut"], "Bihar", "5–7 days", "Fresh water chestnuts with crisp, sweet white kernels – a fasting favourite."),
+  vfruit("dailyapple", "Daily Apple", "Seb", kgVariants(140, 175), ["seb", "saib", "apple"], "Himachal Pradesh", "10–14 days", "Everyday crunchy red apples at a great value."),
+  vfruit("chikoo", "Sapota (Chikoo)", "Chikoo", kgVariants(80, 100), ["chiku", "sapota", "sapodilla"], "Dahanu, Maharashtra", "3–4 days", "Malty-sweet, soft chikoo – great for shakes and snacking."),
+  vfruit("persimmon", "Persimmon (Ramphal)", "Ramphal", [pcs("2 pcs", 90, 115), pcs("4 pcs", 175, 230)], ["ramphal", "japani phal", "persimon", "perimmon"], "Himachal Pradesh", "4–6 days", "Honey-sweet orange persimmons with a soft, jammy bite."),
+  vfruit("watermelon", "Watermelon (Tarbooz)", "Tarbooz", [pcs("1 pc (2–3 kg)", 69, 90)], ["tarbuj", "tarbooj", "kalingad"], "Andhra Pradesh", "7–10 days", "Juicy, red and sweet watermelon – the ultimate summer cooler."),
+  vfruit("pear", "Pear (Nashpati)", "Nashpati", kgVariants(160, 200), ["nashpati", "naspati", "babugosha"], "Himachal Pradesh", "5–7 days", "Sweet, juicy pears with a soft, buttery texture."),
+  vfruit("pineapple", "Pineapple (Ananas)", "Ananas", [pcs("1 pc (1–1.3 kg)", 79, 99)], ["ananas", "annanas"], "Kerala", "4–5 days", "Golden, tangy-sweet pineapple for juices, salads and desserts."),
+  vfruit("mosambi", "Sweet Lime (Mosambi)", "Mosambi", kgVariants(70, 90), ["mausambi", "musambi", "sweet lime"], "Andhra Pradesh", "7–10 days", "Juicy sweet lime – perfect for fresh mosambi juice."),
+  vfruit("plum", "Plum (Aloo Bukhara)", "Aloo Bukhara", [pcs("250 g", 60, 78), pcs("500 g", 115, 155)], ["aloo bukhara", "alubukhara", "plum"], "Himachal Pradesh", "4–5 days", "Juicy, tangy-sweet red plums."),
+  vfruit("papayafruit", "Papaya (Papita)", "Papita", [pcs("1 pc (1–1.5 kg)", 55, 70)], ["papita", "papaya"], "Andhra Pradesh", "3–4 days", "Ripe, sweet papaya with soft orange flesh – great for breakfast."),
+  vfruit("sitaphal", "Custard Apple (Sitaphal)", "Sitaphal", [pcs("500 g", 79, 99), pcs("1 kg", 150, 198)], ["sitafal", "sharifa", "shareefa", "custard apple"], "Maharashtra", "2–3 days", "Creamy, sweet custard apple – a seasonal delight."),
+  vfruit("kharbooja", "Muskmelon (Kharbooja)", "Kharbooja", [pcs("1 pc (1–1.5 kg)", 59, 75)], ["kharbuja", "kharbooj", "cantaloupe", "musk melon"], "Uttar Pradesh", "4–5 days", "Fragrant, sweet muskmelon with juicy orange flesh."),
+  vfruit("rawmango", "Raw Mango (Kacha Aam)", "Kacha Aam", kgVariants(80, 100), ["kairi", "keri", "kaccha aam", "aam", "mango"], "Andhra Pradesh", "5–7 days", "Sour raw mangoes for aam panna, pickle and chutney."),
+  vfruit("cherry", "Jumbo Cherry", "Cherry", [pcs("250 g", 199, 249), pcs("500 g", 389, 498)], ["cherries", "cheri"], "Kashmir", "3–4 days", "Big, glossy, juicy cherries – sweet and seasonal."),
+  vfruit("sunmelon", "Sun Melon", "Sun Melon", [pcs("1 pc (1–1.5 kg)", 89, 110)], ["melon", "yellow melon", "kharbooja"], "Karnataka", "5–7 days", "Sunny yellow melon with crisp, mildly sweet flesh."),
+  vfruit("litchi", "Lychee (Litchi)", "Litchi", [pcs("500 g", 120, 150), pcs("1 kg", 230, 300)], ["lichi", "lychee", "leechi"], "Muzaffarpur, Bihar", "2–3 days", "Juicy, floral Shahi litchis from Muzaffarpur."),
+  vfruit("anjeer", "Fig (Anjeer)", "Anjeer", [pcs("250 g", 120, 150)], ["anjir", "fig"], "Pune, Maharashtra", "2–3 days", "Fresh, honey-sweet figs with jammy pink centres."),
+  vfruit("strawberry", "Strawberry", "Strawberry", [pcs("1 box (200 g)", 99, 125), pcs("2 boxes", 189, 250)], ["strawberries", "stroberi"], "Mahabaleshwar, Maharashtra", "2–3 days", "Sweet, juicy Mahabaleshwar strawberries."),
+];
+
 export const products: Product[] = [
   // Vegetables
   {
@@ -205,6 +239,7 @@ export const products: Product[] = [
     description: "Leafy, iron-rich spinach washed and bunched at the farm. Perfect for palak paneer and dal palak.",
   },
   ...newVegetables,
+  ...vegSectionFruits,
   // Fruits
   {
     id: "apple", name: "Shimla Apple", localName: "Seb", category: "fruits", image: img("apple"),
